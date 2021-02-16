@@ -1,0 +1,10 @@
+{
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  },
+  "python.analysis.extraPaths": [
+    "${workspaceFolder}/src/virus",
+    "${workspaceFolder}/src/who"
+  ]
+}
