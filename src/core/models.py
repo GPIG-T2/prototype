@@ -1,4 +1,4 @@
-from typing import TypeVar, List
+from typing import List, Tuple
 from enum import Enum, auto
 
 # Define the type aliases
@@ -60,12 +60,12 @@ class Area(object):
 
 
 class TransportLink(object):
-    def __init__(self, link_id: TransportLinkId, kind: TransportKind, people: PeopleData, link: [AreaId, AreaId],
+    def __init__(self, link_id: TransportLinkId, kind: TransportKind, people: PeopleData, link: Tuple[AreaId, AreaId],
                  travel_time: float, restriction_level: RestrictionStrictness):
         self.link_id: TransportLinkId = link_id
         self.kind: TransportKind = kind
         self.people: PeopleData = people
-        self.link: [AreaId, AreaId] = link
+        self.link: Tuple[AreaId, AreaId] = link
         self.travel_time: float = travel_time
         self.restriction_level: RestrictionStrictness = restriction_level
 
