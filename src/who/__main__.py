@@ -17,7 +17,7 @@ async def loop() -> Awaitable[None]:
 
         while model.is_running:
             await client.wait_for_turn()
-            model.tick()
+            await model.tick()
             await client.end_turn()
 
 
