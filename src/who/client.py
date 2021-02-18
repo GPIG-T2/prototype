@@ -1,6 +1,9 @@
 from typing import Awaitable
 
 from websockets.client import WebSocketClientProtocol
+from json import dumps
+
+END_TURN_MESSAGE = dumps({"kind": "FINISHED"})
 
 
 class Client:
@@ -8,9 +11,7 @@ class Client:
         self._websocket = websocket
 
     async def wait_for_turn(self):
-        # TODO wait until virus is done
-        pass
+        await self._websocket.recv()
 
     async def end_turn(self):
-        # TODO sends a message to the server indicating end-of-turn
-        pass
+        await self._websocket.send(END_TURN_MESSAGE)
