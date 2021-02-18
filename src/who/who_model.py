@@ -73,6 +73,8 @@ class Model:
         pass
 
     @property
-    def is_running(self) -> bool:
-        # TODO caclulate this on the fly when model is implemented
-        return False
+    async def is_running(self) -> bool:
+        is_running = False
+        while self.layout == None or self.areas == {} or self.transport_links == {} or self.organisations == {}:
+            is_running = True
+        return is_running
