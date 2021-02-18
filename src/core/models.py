@@ -50,12 +50,14 @@ class PeopleData(object):
 
 class Area(object):
     def __init__(self, area_id: AreaId, name: str, people: PeopleData, sub_areas: List[AreaId],
-                 organisations: List[OrganisationId], restriction_level: RestrictionStrictness):
+                 organisations: List[OrganisationId], transport_links: List[TransportLinkId]
+                 , restriction_level: RestrictionStrictness):
         self.area_id: AreaId = area_id
         self.name: str = name
         self.people: PeopleData = people
         self.sub_areas: List[AreaId] = sub_areas
         self.organisations: List[OrganisationId] = organisations
+        self.transport_links: List[TransportLinkId] = transport_links
         self.restriction_level: RestrictionStrictness = restriction_level
 
 
