@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
 
+# Way to reference the core folders
+import pathlib
+import sys
+sys.path.insert(0, str(pathlib.Path().parent.absolute()) + "\\models")
+
 import asyncio
 from typing import Awaitable
 
