@@ -1,6 +1,7 @@
 from client import Client
-from models import *
 from typing import List, Union, Dict
+
+from core.models import Area, AreaId, Layout, Organisation, OrganisationId, TransportLink, TransportLinkId
 
 
 class Model:
@@ -31,7 +32,7 @@ class Model:
         for area in self.areas.values():
             self.load_area_information(area)
 
-    def load_area_information(self, area: Area):
+    async def load_area_information(self, area: Area):
 
         transport_link_ids_to_request = list()
 
