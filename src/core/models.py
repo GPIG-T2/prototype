@@ -1,5 +1,6 @@
-from typing import List, Tuple
+import re
 from enum import Enum, auto
+from typing import Any, Iterable, List, Tuple
 
 # Define the type aliases
 AreaId = int
@@ -41,18 +42,40 @@ class Sex(Enum):
 
 
 # Define the structures
-class PeopleData(object):
+def get_property_values(data: dict, props: Iterable[str]) -> List[Any]:
+    return [data[prop] for prop in props]
+
+
+def snake_case(strs: Iterable[str]) -> Iterable[str]:
+    return [re.sub('([A-Z]+)', r'_\1', s).lower() for s in strs]
+
+
+class DictObject:
+    def to_dict(self, props: Iterable[str], attrs: Iterable[str]) -> dict:
+        data: dict = {}
+        for name in props:
+            data[name] = getattr(self, name)
+        return data
+
+
+class PeopleData(DictObject):
     def __init__(self, total: int, infected: int, ids: List[PersonId]):
         self.total: int = total
         self.infected: int = infected
         self.ids: List[PersonId] = ids
 
+    @staticmethod
+    def from_dict(data: dict):
+        pass
 
-class Area(object):
-    def __init__(self, area_id: AreaId, name: str, people: PeopleData, sub_areas: List[AreaId],
-                 organisations: List[OrganisationId], transport_links: List[TransportLinkId]
-                 , restriction_level: RestrictionStrictness):
-        self.area_id: AreaId = area_id
+    def to_dict(self) -> dict:
+        pass
+
+
+class Area(DictObject):
+    def __init__(self, id: AreaId, name: str, people: PeopleData, sub_areas: List[AreaId],
+                 organisations: List[OrganisationId], transport_links: List[TransportLinkId], restriction_level: RestrictionStrictness):
+        self.id: AreaId = id
         self.name: str = name
         self.people: PeopleData = people
         self.sub_areas: List[AreaId] = sub_areas
@@ -60,50 +83,99 @@ class Area(object):
         self.transport_links: List[TransportLinkId] = transport_links
         self.restriction_level: RestrictionStrictness = restriction_level
 
+    @staticmethod
+    def from_dict(data: dict):
+        pass
 
-class TransportLink(object):
-    def __init__(self, link_id: TransportLinkId, kind: TransportKind, people: PeopleData, link: Tuple[AreaId, AreaId],
+    def to_dict(self) -> dict:
+        pass
+
+
+class TransportLink(DictObject):
+    def __init__(self, id: TransportLinkId, kind: TransportKind, people: PeopleData, link: Tuple[AreaId, AreaId],
                  travel_time: float, restriction_level: RestrictionStrictness):
-        self.link_id: TransportLinkId = link_id
+        self.id: TransportLinkId = id
         self.kind: TransportKind = kind
         self.people: PeopleData = people
         self.link: Tuple[AreaId, AreaId] = link
         self.travel_time: float = travel_time
         self.restriction_level: RestrictionStrictness = restriction_level
 
+    @staticmethod
+    def from_dict(data: dict):
+        pass
 
-class AreaLayout(object):
+    def to_dict(self) -> dict:
+        pass
+
+
+class AreaLayout(DictObject):
     def __init__(self, area_id: AreaId, x: float, y: float):
         self.area_id: AreaId = area_id
         self.x: float = x
         self.y: float = y
 
+    @staticmethod
+    def from_dict(data: dict):
+        pass
 
-class Layout(object):
+    def to_dict(self) -> dict:
+        pass
+
+
+class Layout(DictObject):
     def __init__(self, areas: List[AreaId]):
         self.areas: List[AreaId] = areas
 
+    @staticmethod
+    def from_dict(data: dict):
+        pass
 
-class Contact(object):
+    def to_dict(self) -> dict:
+        pass
+
+
+class Contact(DictObject):
     def __init__(self, person_id: PersonId, timestep: int):
         self.person_id: PersonId = person_id
         self.timestep: int = timestep
 
+    @staticmethod
+    def from_dict(data: dict):
+        pass
 
-class Person(object):
+    def to_dict(self) -> dict:
+        pass
+
+
+class Person(DictObject):
     def __init__(self, person_id: PersonId, age: int, sex: Sex):
         self.person_id: PersonId = person_id
         self.age: int = age
         self.sex: Sex = sex
 
+    @staticmethod
+    def from_dict(data: dict):
+        pass
 
-class ContactTrace(object):
+    def to_dict(self) -> dict:
+        pass
+
+
+class ContactTrace(DictObject):
     def __init__(self, person_id: PersonId, contact: List[Contact]):
         self.person_id: PersonId = person_id
         self.contact: List[Contact] = contact
 
+    @staticmethod
+    def from_dict(data: dict):
+        pass
 
-class Organisation(object):
+    def to_dict(self) -> dict:
+        pass
+
+
+class Organisation(DictObject):
     def __init__(self, organisation_id: OrganisationId, kind: OrganisationKind, people: PeopleData,
                  restriction_level: RestrictionStrictness):
         self.organisation_id: OrganisationId = organisation_id
@@ -111,8 +183,15 @@ class Organisation(object):
         self.people: PeopleData = people
         self.restriction_level: RestrictionStrictness = restriction_level
 
+    @staticmethod
+    def from_dict(data: dict):
+        pass
 
-class Restriction(object):
+    def to_dict(self) -> dict:
+        pass
+
+
+class Restriction(DictObject):
     def __init__(self, restriction_id: RestrictionId, restriction_level: RestrictionStrictness,
                  areas: List[AreaId], organisations: List[OrganisationId], transports: List[TransportLinkId]):
         self.restriction_id: RestrictionId = restriction_id
@@ -120,3 +199,10 @@ class Restriction(object):
         self.areas: List[AreaId] = areas
         self.organisations: List[OrganisationId] = organisations
         self.transports: List[TransportLinkId] = transports
+
+    @staticmethod
+    def from_dict(data: dict):
+        pass
+
+    def to_dict(self) -> dict:
+        pass
